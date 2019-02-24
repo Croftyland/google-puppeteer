@@ -1,30 +1,21 @@
 {
-  "name": "google-puppeteer",
+  "name": "puppeteer-testing",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "faker": "^4.1.0",
-    "jest": "^24.1.0",
-    "jest-cli": "^24.1.0",
-    "puppeteer": "^1.12.2",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3",
-    "react-scripts": "2.1.5"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "debug": "NODE_ENV=debug yarn test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "debug": "NODE_ENV=debug npm test"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "faker": "^4.1.0",
+    "puppeteer": "^0.13.0"
+  }
 }

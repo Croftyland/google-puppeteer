@@ -8,18 +8,19 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <h1 data-testid='h1' className="App-title">Welcome to React</h1>
+          <nav data-testid="navbar" className='navbar' role="navigation">
+            <ul>
+               <li data-testid="navBarLi" className='nav-li'><a href="#">Home</a></li>
+               <li data-testid="navBarLi" className='nav-li'><a href="#">About</a></li>
+               <li data-testid="navBarLi" className='nav-li'><a href="#">Skills</a></li>
+               <li data-testid="navBarLi" className='nav-li'><a href="#">Works</a></li>
+            </ul>
+          </nav>
         </header>
+        <p className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
       </div>
     );
   }
