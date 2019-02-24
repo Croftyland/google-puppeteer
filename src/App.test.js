@@ -1,4 +1,15 @@
 const puppeteer = require('puppeteer')
+const faker = require('faker')   //Faker is helpful because every time we run our test
+                                 // it will generate a new different email and first name and last name.
+                                 // This is helpful to test certain different scenarios.
+
+const user = {
+    email: faker.internet.email(),
+    password:'123',
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+}
+
 
 const isDebugging = () => {
   let debugging_mode = {
@@ -34,6 +45,27 @@ describe('on page load ', () => {
                                                                             // it just means that there's no callback.
 
   })
+
+
+    test('login form works correctly', async () => {
+        await page.click('[data-testid="firstName"]')
+        await page.type('[data-testid="firstName"]',user.firstName)
+
+        await page.click('[data-testid="lastName"]')
+        await page.type('[data-testid="lastName"]',user.firstName)
+
+        await page.click('[data-testid="email"]')
+        await page.type('[data-testid="email"]',user.email)
+
+        await page.click('[data-testid="password"]')
+        await page.type('[data-testid="password"]',user.password)
+
+        await page.click('[data-testid="submit"]')
+
+        await page.waitForSelector('[data-testid="success"]')
+
+
+    },16000)
 })
 
 afterAll(() => {
