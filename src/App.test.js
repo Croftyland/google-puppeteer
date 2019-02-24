@@ -20,12 +20,12 @@ beforeAll(async () => {
 
 describe('on page load ', () => {
   test('h1 loads correctly', async () => {
-    const html = await page.$eval('[data-testid="h1"]', e => e.innerHTML)
-
-    expect(html).toBe('Welcome to React')
-
-  }, 16000)
-
+    const html = await page.$eval('[data-testid="h1"]', e => e.innerHTML)   //$eval method basically runs document.querySelector
+    expect(html).toBe('Welcome to React')                                   // within whatever frame it's passed into.
+  }, 16000)                                                                 //it finds a selector that matches this class,
+                                                                            // it's going to pass that to the callback function e.innerHTML,
+                                                                            // where we can grab stuff, and do stuff with it. In our case,
+                                                                            // we want to grab that HTML that's inside of it.
   test('nav loads correctly', async () => {
     const navbar = await page.$eval('[data-testid="navbar"]', el => el ? true : false)
     const listItems = await page.$$('[data-testid="navBarLi"]')
