@@ -28,10 +28,11 @@ describe('on page load ', () => {
                                                                             // we want to grab that HTML that's inside of it.
   test('nav loads correctly', async () => {
     const navbar = await page.$eval('[data-testid="navbar"]', el => el ? true : false)
-    const listItems = await page.$$('[data-testid="navBarLi"]')
+    const listItems = await page.$$('[data-testid="navBarLi"]')             //For our list items, we're using the double dollar sign method $$.
+    expect(navbar).toBe(true)                                               // This is like running document.querySelector all from within the page.
+    expect(listItems.length).toBe(4)                                        // When the eval title is not used alongside the dollar signs,
+                                                                            // it just means that there's no callback.
 
-    expect(navbar).toBe(true)
-    expect(listItems.length).toBe(4)
   })
 })
 
