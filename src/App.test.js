@@ -2,6 +2,8 @@ const puppeteer = require('puppeteer')
 const faker = require('faker')   //Faker is helpful because every time we run our test
                                  // it will generate a new different email and first name and last name.
                                  // This is helpful to test certain different scenarios.
+const devices = require('puppeteer/DeviceDescriptors');
+const iPhone = devices['iPhone 7'];
 
 const user = {
     email: faker.internet.email(),
@@ -48,24 +50,32 @@ describe('on page load ', () => {
 
 
     test('login form works correctly', async () => {
-        await page.click('[data-testid="firstName"]')
-        await page.type('[data-testid="firstName"]',user.firstName)
+        const page2 = await browser.newPage()
+        await page2.emulate(iPhone)
+        await page2.goto('http://localhost:3000/')
 
-        await page.click('[data-testid="lastName"]')
-        await page.type('[data-testid="lastName"]',user.firstName)
+        const firstNameEl = await page2.$('[data-testid="firstName"]')
+        const lastNameEl = await page2.$('[data-testid="lastName"]')
+        const emaildEl = await page2.$('[data-testid="email"]')
+        const passwordEl = await page2.$('[data-testid="password"]')
+        const submitEl = await page2.$('[data-testid="submit"]')
 
-        await page.click('[data-testid="email"]')
-        await page.type('[data-testid="email"]',user.email)
+        await firstNameEl.tap()
+        await page2.type('[data-testid="firstName"]', user.firstName)
 
-        await page.click('[data-testid="password"]')
-        await page.type('[data-testid="password"]',user.password)
+        await lastNameEl.tap()
+        await page2.type('[data-testid="lastName"]', user.lastName)
 
-        await page.click('[data-testid="submit"]')
+        await emaildEl.tap()
+        await page2.type('[data-testid="email"]', user.email)
 
-        await page.waitForSelector('[data-testid="success"]')
+        await passwordEl.tap()
+        await page2.type('[data-testid="password"]', user.password)
 
+        await submitEl.tap()
 
-    },16000)
+        await page2.waitForSelector('[data-testid="success"]')
+    }, 16000)
 })
 
 afterAll(() => {
