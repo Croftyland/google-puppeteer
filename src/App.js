@@ -10,16 +10,14 @@ import SuccessMessage from './SuccessMessage.jsx'
 class App extends Component {
     state = {
         complete: false,
-        firstName: ''
+        firstName: '',
+        starWars: {}
     }
 
     handleSubmit = e => {
        e.preventDefault()
-        this.setState({ complete: true })
         if (document.cookie.includes('JWT')) {
-            this.setState({
-                complete: true
-            })
+            this.setState({complete: true})
         }
         document.cookie = `firstName=${this.state.firstName}`
         throw new Error('Whoops!')
@@ -28,6 +26,11 @@ class App extends Component {
         this.setState({
             firstName: e.currentTarget.value
         })
+    }
+
+    async componentDidMount() {
+        const data = await fetch('https://swapi.co/api/people/1/').then(response => response.json())
+        this.setState({starWars: data})
     }
 
     render() {
@@ -55,11 +58,12 @@ class App extends Component {
                         </ul>
                     </nav>
                 </header>
-                {this.state.complete ? (
+                <h3 data-testid="starWars">{this.state.starWars.url ? 'Received StarWars data!' : 'Something went wrong'}</h3>
+                { this.state.complete ?
                     <SuccessMessage />
-                ) : (
+                     :
                     <Login submit={this.handleSubmit} input={this.handleInput} />
-                )}
+                }
             </div>
         );
     }

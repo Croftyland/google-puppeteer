@@ -30,6 +30,18 @@ beforeAll(async () => {
     browser = await puppeteer.launch(isDebugging())
     page = await browser.newPage()
 
+    // set `setRequestInterception` to false to
+    await page.setRequestInterception(true)
+    page.on('request', interceptedRequest => {
+        if (interceptedRequest.url.includes('swapi')) {
+            interceptedRequest.abort()
+        }
+        else {
+            interceptedRequest.continue()
+        }
+    })
+
+
     page.on('console', msg => logs.push(msg.text))
     page.on('pageerror', error => errors.push(error.text))
 
@@ -99,15 +111,17 @@ test('nav loads correctly', async () => {
         })
     })
 
-    test('does not have any console logs', () => {
+    test.skip('does not have any console logs', () => {
         const newLogs = logs.filter( s => s !== '%cDownload the React DevTools for a better development experience: https://fb.me/react-devtools font-weight:bold')
         expect(newLogs.length).toBe(0)
     })
 
-    test('does not have exceptions', () => {
+    test.skip('does not have exceptions', () => {
         expect(errors.length).toBe(0)
     })
-
+    test.only('fetches starWars endpoint', async () => {
+        const h3 = await page.$eval('[data-testid="starWars"]', e => e.innerHTML)
+        expect(h3).toBe('Something went wrong')
 })
 
 afterAll(() => {
