@@ -14,13 +14,15 @@ class App extends Component {
     }
 
     handleSubmit = e => {
-        e.preventDefault()
+       e.preventDefault()
+        this.setState({ complete: true })
         if (document.cookie.includes('JWT')) {
             this.setState({
                 complete: true
             })
         }
         document.cookie = `firstName=${this.state.firstName}`
+        throw new Error('Whoops!')
     }
     handleInput = e => {
         this.setState({
