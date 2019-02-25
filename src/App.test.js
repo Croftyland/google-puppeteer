@@ -41,7 +41,6 @@ beforeAll(async () => {
         }
     })
 
-
     page.on('console', msg => logs.push(msg.text))
     page.on('pageerror', error => errors.push(error.text))
 
